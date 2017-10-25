@@ -1,0 +1,36 @@
+
+@import "fonts";
+/* Variables */
+@import "vars";
+
+/* Mixin */
+@import "mixin";
+
+/*global*/
+@import "global/general";
+@import "global/header";
+
+/*components*/
+@import "components/block-cart";
+@import "components/block-menu-user";
+@import "components/block-top-phone";
+@import "components/block-search";
+@import "components/main-menu";
+@import "components/block-banner-main";
+@import "components/block-set-feature";
+@import "components/block-featured-product";
+@import "components/block-testimonials";
+@import "components/pager";
+@import "components/block-reated-products";
+
+
+/*global*/
+@import "global/footer";
+
+@import "components/page-set-product-list";
+@import "components/page-product-list";
+@import "components/page-project";
+@import "components/page-set-product-detail";
+@import "components/page-collections";
+@import "components/page-product-detail";
+
