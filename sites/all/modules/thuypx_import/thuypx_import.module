@@ -22,72 +22,43 @@ function thuypx_import_product() {
 
     include 'lib.php';
     $csv = new parseCSV();
-    $csv->auto('F:\Downloads\data-product.csv');
+    $csv->auto('F:\Downloads\data-news.csv');
     $d=node_load(17);
     $j=0;
     foreach($csv->data as $row){
         $j++;
         $node = new stdClass();
-        $node->title = $row['ten'];
-        $node->type = "product";
+        $node->title = $row['tieude'];
+        $node->type = "article";
         node_object_prepare($node); // Sets some defaults. Invokes hook_prepare() and hook_node_prepare().
         $node->language = LANGUAGE_NONE; // Or e.g. 'en' if locale is enabled
         $node->uid = 1;
         $node->status = 1; //(1 or 0): published or not
         $node->promote = 0; //(1 or 0): promoted to front page
         $node->comment = 0; // 0 = comments disabled, 1 = read only, 2 = read/write
-        $node->model='SP'.$j;
-        $node->list_price=(int)$row['giaban'];
-        $node->cost=(int)$row['giahang'];
-        $node->sell_price=(int)$row['giaban'];
-        $node->price=(int)$row['giahang'];
-        //taxonomy term
-        $hangsanxuat=json_decode($row['hangsanxuat'],true);
-        $terms=array();
-        foreach($hangsanxuat as $hsx){
-            if($hsx){
-                $term=taxonomy_get_term_by_name($hsx,'catalog');
-                if(count($term)<1){
-                    $term = new stdClass();
-                    $term->name = $hsx;
-                    $term->vid = 2;
-                    taxonomy_term_save($term);
-                }else{
-                    $term=array_shift($term);
-                }
-                array_push($terms,$term);
-            }
-        }
-        $i=0;
-        foreach($terms as $term){
-            $node->taxonomy_catalog[LANGUAGE_NONE][$i]['tid']=$term->tid;
-            $i++;
-        }
-
         #category
         if($row['loai']){
-            $term1=taxonomy_get_term_by_name($row['loai'],'manufacturer');
+            $term1=taxonomy_get_term_by_name($row['loai'],'news_category');
             if(count($term1)<1){
                 $term1 = new stdClass();
                 $term1->name = $row['loai'];
-                $term1->vid = 3;
+                $term1->vid = 4;
                 taxonomy_term_save($term1);
             }else{
                 $term1=array_shift($term1);
             }
-
         }
 
-        $node->field_manufacturer[LANGUAGE_NONE][0]['tid']=$term1->tid;
+        $node->field_news_category[LANGUAGE_NONE][0]['tid']=$term1->tid;
 
         #image
-        $existing_filepath = 'F:\websites\HOANGNGAN-VN\data_store\anhdaidien'.DIRECTORY_SEPARATOR.$row['hinhanh'];
-        if(file_exists($existing_filepath)){
+        $existing_filepath = 'F:\websites\HOANGNGAN-VN\data_store\upload'.DIRECTORY_SEPARATOR.$row['hinhanh'];
+        if($row['hinhanh'] && file_exists($existing_filepath)){
             $new_filepath = "public://{$row['hinhanh']}";
             $drupal_file = file_save_data(file_get_contents($existing_filepath), $new_filepath);
             $drupal_file->alt = $node->title;
             $drupal_file->title = $node->title;
-            $node->uc_product_image[$node->language][0] = get_object_vars($drupal_file);
+            $node->field_image[$node->language][0] = get_object_vars($drupal_file);
         };
 
 //summary
@@ -96,13 +67,13 @@ function thuypx_import_product() {
         $node->field_summary[$node->language][0]['value']  = $row['mota'];
 
         $node->body[LANGUAGE_NONE][0]['format']  = 'full_html';
-        $node->body[LANGUAGE_NONE][0]['value']  = $row['chitiet'];
+        $node->body[LANGUAGE_NONE][0]['value']  = $row['noidung'];
 
 
 
         $node->metatags[LANGUAGE_NONE]['title']['value'] = $row['title'];
-        $node->metatags[LANGUAGE_NONE]['description']['value'] = $row['keyword'];
-        $node->metatags[LANGUAGE_NONE]['keywords']['value'] = $row['meta'];
+        $node->metatags[LANGUAGE_NONE]['keywords']['value'] = $row['keyword'];
+        $node->metatags[LANGUAGE_NONE]['description']['value'] = $row['de'];
 
         $node = node_submit($node); // Prepare node for saving
         node_save($node);
@@ -126,7 +97,7 @@ function thuypx_import_replacedomain(){
     foreach($nodes as $node){
 
         $body=$node->body[LANGUAGE_NONE][0]['value'];
-        $node->body[LANGUAGE_NONE][0]['value']=str_replace('http://maylocnuocviet.com/data_store/upload/','/sites/default/files/upload/',$body);
+        $node->body[LANGUAGE_NONE][0]['value']=str_replace('http://maylocnuocviet.com/data_store/anhdaidien/','/sites/default/files/',$body);
         node_save($node);
     }
 
