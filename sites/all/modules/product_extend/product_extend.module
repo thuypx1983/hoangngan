@@ -159,6 +159,7 @@ function product_extend_theme() {
 }
 
 function product_extend_form_alter(&$form, &$form_state, $form_id){
+    return;
   //if it is the exposed filter view
   if (($form_id == 'views_exposed_form') &&
     //for the view we care about
