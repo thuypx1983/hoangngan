@@ -126,7 +126,7 @@ function thuypx_import_replacedomain(){
     foreach($nodes as $node){
 
         $body=$node->body[LANGUAGE_NONE][0]['value'];
-        $node->body[LANGUAGE_NONE][0]['value']=str_replace('src="sites/default/files','src="/sites/default/files',$body);
+        $node->body[LANGUAGE_NONE][0]['value']=str_replace('http://maylocnuocviet.com/data_store/upload/','/sites/default/files/upload/',$body);
         node_save($node);
     }
 
