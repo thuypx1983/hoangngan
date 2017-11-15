@@ -2,13 +2,9 @@ name = OMS
 description = OMS is a premium Drupal 7 theme. Developed by <a href="http://www.oms.vn">oms.vn</a>.
 core = 7.x
 engine = phptemplate
-stylesheets[all][] = fronts/font-awesome-4.7.0/css/font-awesome.min.css
 stylesheets[all][] = css/style.css
-stylesheets[all][] = color/colors.css
 stylesheets[all][] = js/pushy/css/pushy.css
 stylesheets[all][] = js/magnific-popup/magnific-popup.css
-scripts[] = js/jquery-migrate-3.0.1.js
-scripts[] = css/bootstrap-3.3.7/js/bootstrap.js
 scripts[] = js/magnific-popup/jquery.magnific-popup.js
 scripts[] = js/overwrites.js
 scripts[] = js/scripts.js

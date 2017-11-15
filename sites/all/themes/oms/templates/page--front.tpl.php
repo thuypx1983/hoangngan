@@ -74,6 +74,12 @@
       <div id="home-banner"> <?php print render($page['home_banner']); ?></div>
   <?php endif; ?>
 
+    <?php if ($page['home_high2']): ?>
+        <div class="container">
+            <?php print render($page['home_high2']); ?>
+        </div>
+    <?php endif; ?>
+
     <?php if ($page['home_high1']): ?>
         <?php print render($page['home_high1']); ?>
     <?php endif; ?>

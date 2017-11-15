@@ -52,6 +52,9 @@
         },
 
         autoHeight:function(){
+            STNScript.equalHeight('.block-product-by-category .views-row');
+
+
             STNScript.equalHeight('.view-id-product_list .views-row');
             STNScript.equalHeight('.view-technical-list .views-row');
             STNScript.equalHeight('.view-news.view-display-id-page_2 .view-news .views-row,.view-news.view-display-id-page_1 .view-news .views-row');
@@ -152,6 +155,7 @@
             }
         })
         STNScript.initSlick();
+        STNScript.testimonialsEffect();
         STNScript.createMenuMobile();
 
 
