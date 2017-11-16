@@ -24,5 +24,3 @@
 </div>
 <div class="site-overlay"></div>
 <!--!pushy menu-->
-
-<script type="text/javascript" src="/sites/all/themes/oms/js/pushy/js/pushy.js?oxoo2i"></script>

@@ -35,9 +35,6 @@ function oms_process_html(&$vars) {
 }
 
 function oms_preprocess_html(&$variables) {
- drupal_add_js('//cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.7.1/slick.min.js', array('type' => 'external'));
-
-
     // Query the view and add a class
     $view = views_get_page_view();
     if (isset($view) && ($view->current_display == "page"
