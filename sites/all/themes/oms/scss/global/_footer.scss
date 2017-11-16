@@ -8,8 +8,28 @@
 }
 .footer-address{
   p{
-    color: #959595;
     font-size: 12px;
-    font-weight: 100;
+  }
+}
+
+.footer-block{
+  ul{
+    padding-left: 0px;
+    li{
+      list-style: none;
+    }
+  }
+  .title{
+    color: $color1;
+    font-weight: bold;
+  }
+}
+.head.social{
+  ul{
+    li{
+      list-style: none;
+      display: inline-block;
+
+    }
   }
 }

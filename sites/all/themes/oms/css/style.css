@@ -99,9 +99,19 @@
   margin-top: 65px; }
 
 .footer-address p {
-  color: #959595;
-  font-size: 12px;
-  font-weight: 100; }
+  font-size: 12px; }
+
+.footer-block ul {
+  padding-left: 0px; }
+  .footer-block ul li {
+    list-style: none; }
+.footer-block .title {
+  color: #0ca63a;
+  font-weight: bold; }
+
+.head.social ul li {
+  list-style: none;
+  display: inline-block; }
 
 body.views--set-products--page-2 .page-title {
   padding: 20px 0; }
