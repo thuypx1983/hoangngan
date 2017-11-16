@@ -56,7 +56,7 @@
       padding-top: 20px;
       .uc-price{
         font-weight: bold;
-        color: $color1;
+        color: $color1_1;
       }
 
     }
@@ -74,4 +74,20 @@
   }
   padding-bottom: 60px;
   margin-top: 50px;
+  .slick-prev {
+    left: 0px;
+    z-index: 1;
+    &:before{
+      color: $color1;
+      font-size: 30px;
+    }
+  }
+  .slick-next {
+    right: 0px;
+    z-index: 1;
+    &:before{
+      color: $color1;
+      font-size: 30px;
+    }
+  }
 }

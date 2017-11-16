@@ -41,7 +41,7 @@
   padding-top: 10px;
   text-align: center; }
   .grid-product .views-field-sell-price .uc-price {
-    color: #0ca63a;
+    color: #ff4200;
     font-weight: bold; }
 
 .block-product-by-category {
@@ -198,7 +198,7 @@ body.views--products-list--page-1 .view-products-list {
       padding-left: 15px; }
       body.views--products-list--page-2 .view-products-list .views-row .views-field-sell-price .uc-price,
       body.views--products-list--page-1 .view-products-list .views-row .views-field-sell-price .uc-price {
-        color: #0ca63a;
+        color: #ff4200;
         font-weight: bold; }
   body.views--products-list--page-2 .view-products-list .view-header,
   body.views--products-list--page-1 .view-products-list .view-header {

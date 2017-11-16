@@ -4374,13 +4374,25 @@ header .container-top {
     padding-top: 20px; }
     .block-featured-product .views-row .views-field-sell-price .uc-price {
       font-weight: bold;
-      color: #0ca63a; }
+      color: #ff4200; }
   .block-featured-product .views-row .views-field-uc-product-image img {
     outline: none; }
   .block-featured-product .slick-dots {
     bottom: -50px; }
     .block-featured-product .slick-dots li button::before {
       font-size: 14px; }
+  .block-featured-product .slick-prev {
+    left: 0px;
+    z-index: 1; }
+    .block-featured-product .slick-prev:before {
+      color: #0ca63a;
+      font-size: 30px; }
+  .block-featured-product .slick-next {
+    right: 0px;
+    z-index: 1; }
+    .block-featured-product .slick-next:before {
+      color: #0ca63a;
+      font-size: 30px; }
 
 .block-testimonials {
   border-top: 1px solid #dfdfdf;
