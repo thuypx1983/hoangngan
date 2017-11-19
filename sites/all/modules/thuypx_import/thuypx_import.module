@@ -15,9 +15,106 @@ function thuypx_import_menu() {
         'page callback' => 'thuypx_import_replacedomain',
         'access arguments' => array('access content'),
     );
+    $items['thuypx_import/updatecateroy'] = array(
+        'type' => MENU_CALLBACK,
+        'page callback' => 'thuypx_import_updatecateroy',
+        'access arguments' => array('access content'),
+    );
     return $items;
 }
 
+function thuypx_import_product1() {
+
+    include 'lib.php';
+    $csv = new parseCSV();
+    $csv->auto('F:\Downloads\data-products.csv');
+    $d=node_load(17);
+    $j=0;
+    foreach($csv->data as $row){
+        $j++;
+        $node = new stdClass();
+        $node->title = $row['ten'];
+        $node->type = "product";
+        node_object_prepare($node); // Sets some defaults. Invokes hook_prepare() and hook_node_prepare().
+        $node->language = LANGUAGE_NONE; // Or e.g. 'en' if locale is enabled
+        $node->uid = 1;
+        $node->status = 1; //(1 or 0): published or not
+        $node->promote = 0; //(1 or 0): promoted to front page
+        $node->comment = 0; // 0 = comments disabled, 1 = read only, 2 = read/write
+        $node->model='SP'.$j;
+        $node->list_price=100*((int)$row['giaban']);
+        $node->cost=100*((int)$row['giahang']);
+        $node->sell_price=100*((int)$row['giaban']);
+        $node->price=100*((int)$row['giahang']);
+        //taxonomy term
+        $hangsanxuat=json_decode($row['hangsanxuat'],true);
+        $terms=array();
+        foreach($hangsanxuat as $hsx){
+            if($hsx){
+                $term=taxonomy_get_term_by_name($hsx,'taxonomy_catalog');
+                if(count($term)<1){
+                    $term = new stdClass();
+                    $term->name = $hsx;
+                    $term->vid = 2;
+                    taxonomy_term_save($term);
+                }else{
+                    $term=array_shift($term);
+                }
+                array_push($terms,$term);
+            }
+        }
+        $i=0;
+        foreach($terms as $term){
+            $node->taxonomy_catalog[LANGUAGE_NONE][$i]['tid']=$term->tid;
+            $i++;
+        }
+
+        #category
+        if($row['loai']){
+            $term1=taxonomy_get_term_by_name($row['loai'],'manufacturer');
+            if(count($term1)<1){
+                $term1 = new stdClass();
+                $term1->name = $row['loai'];
+                $term1->vid = 3;
+                taxonomy_term_save($term1);
+            }else{
+                $term1=array_shift($term1);
+            }
+
+        }
+
+        $node->field_manufacturer[LANGUAGE_NONE][0]['tid']=$term1->tid;
+
+        #image
+        $existing_filepath = 'F:\websites\HOANGNGAN-VN\data_store\anhdaidien'.DIRECTORY_SEPARATOR.$row['hinhanh'];
+        if(file_exists($existing_filepath)){
+            $new_filepath = "public://{$row['hinhanh']}";
+            $drupal_file = file_save_data(file_get_contents($existing_filepath), $new_filepath);
+            $drupal_file->alt = $node->title;
+            $drupal_file->title = $node->title;
+            $node->uc_product_image[$node->language][0] = get_object_vars($drupal_file);
+        };
+
+//summary
+
+        $node->field_summary[$node->language][0]['format']  = 'full_html';
+        $node->field_summary[$node->language][0]['value']  = $row['mota'];
+
+        $node->body[LANGUAGE_NONE][0]['format']  = 'full_html';
+        $node->body[LANGUAGE_NONE][0]['value']  = $row['chitiet'];
+
+
+
+        $node->metatags[LANGUAGE_NONE]['title']['value'] = $row['title'];
+        $node->metatags[LANGUAGE_NONE]['description']['value'] = $row['keyword'];
+        $node->metatags[LANGUAGE_NONE]['keywords']['value'] = $row['meta'];
+
+        $node = node_submit($node); // Prepare node for saving
+        node_save($node);
+
+    }
+
+}
 function thuypx_import_product() {
 
     include 'lib.php';
@@ -81,7 +178,6 @@ function thuypx_import_product() {
     }
 
 }
-
 function thuypx_import_replacedomain(){
     // Return all nids of nodes of type "page".
     $nids = db_select('node', 'n')
@@ -101,4 +197,22 @@ function thuypx_import_replacedomain(){
         node_save($node);
     }
 
+}
+
+function thuypx_import_updatecateroy(){
+    include 'lib.php';
+    $csv = new parseCSV();
+    $csv->auto('F:\Downloads\data-menus.csv');
+
+    foreach($csv->data as $row){
+        $terms=taxonomy_get_term_by_name($row['url']);
+        foreach($terms as $term){
+            $term->name=$row['tenmenu'];
+
+            $term->metatags[LANGUAGE_NONE]['title']['value'] = $row['title'];
+            $term->metatags[LANGUAGE_NONE]['description']['value'] = $row['de'];
+            $term->metatags[LANGUAGE_NONE]['keywords']['value'] = $row['keyword'];
+            taxonomy_term_save($term);
+        }
+    }
 }
